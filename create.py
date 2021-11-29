@@ -5,16 +5,16 @@ import numpy as np
 def generate(df):
 
     for i in range(0, 10000):
+        # absolute right rule
         if (df.iloc[i][0] == 1
-            and 180 <= df.iloc[i][1] <= 190
-            # and 83 <= df.iloc[i][2] <= 95 #height
-            # and 17 <= df.iloc[i][3] <= 24 #weight
-            and df.iloc[i][5] == 1
-            and df.iloc[i][6] == 3
-                and df.iloc[i][7] == 2):
+            and df.iloc[i][5] == 1  # occupation
+            and df.iloc[i][6] == 3  # race
+            and df.iloc[i][7] == 2  # hair
+            and df.iloc[i][8] == 1  # titan
+            ):
 
             df.iloc[i][20] = 1
-
+    # print(df['isReiner'].sum())
     return df
 
 
@@ -46,7 +46,6 @@ if __name__ == '__main__':
             'isReiner': 0
             }
     df = pd.DataFrame(data)
-    # df.append(data_Reiner)
 
     df_new = generate(df)
     df_new.to_csv('train.csv', index=False)
