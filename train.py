@@ -3,8 +3,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import svm
+from sklearn.naive_bayes import GaussianNB
+from sklearn import tree
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.feature_selection import SelectKBest, chi2
 
 
 def Logistic_Regression(X_train, X_test, y_train, y_test):  # Logistic Regression
@@ -16,11 +21,14 @@ def Logistic_Regression(X_train, X_test, y_train, y_test):  # Logistic Regressio
 
 
 def Decision_Tree(X_train, X_test, y_train, y_test):  # Decision Tree Classifier
-    clf_dt = DecisionTreeClassifier(random_state=0)
+    clf_dt = tree.DecisionTreeClassifier(random_state=0)
     clf_dt.fit(X_train, y_train)
     y_pred = clf_dt.predict(X_test)
     score = accuracy_score(y_test, y_pred)
     print('Decision Tree Accuracy :', score)
+
+    # tree.plot_tree(clf_dt, filled=True, rounded=True)
+    # plt.show()
 
 
 def Random_Forest(X_train, X_test, y_train, y_test):  # Random Forest Classifier
@@ -40,12 +48,20 @@ def Support_Vector_Machine(X_train, X_test, y_train, y_test):
     print('Support Vector Machine Accuracy :', score)
 
 
+def Gaussian_Naive_Bayes(X_train, X_test, y_train, y_test):
+    clf_gnb = GaussianNB()
+    clf_gnb.fit(X_train, y_train)
+    y_pred = clf_gnb.predict(X_test)
+    score = accuracy_score(y_test, y_pred)
+    print('Gaussian Naive Bayes Accuracy :', score)
+
+
 if __name__ == '__main__':
 
     df = pd.read_csv('train.csv')
     y = df['isReiner']
-    x = df.drop(['isReiner'], axis=1)
-    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
+    X = df.drop(['isReiner'], axis=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
     # Logistic Regression
     Logistic_Regression(X_train, X_test, y_train, y_test)
@@ -58,3 +74,6 @@ if __name__ == '__main__':
 
     # Support Vector Machine
     Support_Vector_Machine(X_train, X_test, y_train, y_test)
+
+    # Gaussian Naive Bayes
+    Gaussian_Naive_Bayes(X_train, X_test, y_train, y_test)

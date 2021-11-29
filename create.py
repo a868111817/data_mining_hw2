@@ -8,13 +8,12 @@ def generate(df):
         # absolute right rule
         if (df.iloc[i][0] == 1
             and df.iloc[i][5] == 1  # occupation
-            and df.iloc[i][6] == 3  # race
             and df.iloc[i][7] == 2  # hair
             and df.iloc[i][8] == 1  # titan
             ):
 
             df.iloc[i][20] = 1
-    # print(df['isReiner'].sum())
+    print(df['isReiner'].sum())
     return df
 
 
